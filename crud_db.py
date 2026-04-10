@@ -38,3 +38,14 @@ def ajouter_voiture(voiture):
 
     curseur.close()
     connexion.close()
+
+def supprimer_voiture(id):
+    connexion = connecter_db()
+    curseur = connexion.cursor()
+
+    requete = "DELETE FROM voiture WHERE id = %s"
+    curseur.execute(requete, (id,))
+    connexion.commit()
+
+    curseur.close()
+    connexion.close()
