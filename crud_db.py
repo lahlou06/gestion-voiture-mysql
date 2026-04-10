@@ -49,3 +49,29 @@ def supprimer_voiture(id):
 
     curseur.close()
     connexion.close()
+from voiture import Voiture
+
+def recuperer_voitures():
+        connexion = connecter_db()
+        curseur = connexion.cursor()
+
+        requete = "SELECT id, marque, modele, annee, prix FROM voiture"
+        curseur.execute(requete)
+
+        resultats = curseur.fetchall()
+        voitures = []
+
+        for ligne in resultats:
+            voiture = Voiture(
+                ligne[1],
+                ligne[2],
+                ligne[3],
+                ligne[4],
+                ligne[0]
+            )
+            voitures.append(voiture)
+
+        curseur.close()
+        connexion.close()
+
+        return voitures

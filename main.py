@@ -1,5 +1,5 @@
 from voiture import Voiture
-from crud_db import connecter_db, ajouter_voiture,supprimer_voiture
+from crud_db import connecter_db, ajouter_voiture,supprimer_voiture,recuperer_voitures
 
 try:
     connexion = connecter_db()
@@ -15,34 +15,16 @@ v3 = Voiture("Audi", "A3", 2018, 24500)
 ajouter_voiture(v1)
 ajouter_voiture(v2)
 ajouter_voiture(v3)
-voitures = [v1, v2,v3]
-print("\nVoitures après ajout :")
-for v in  voitures:
+print("Voitures après ajout :")
+voitures = recuperer_voitures()
+for v in voitures:
     v.afficher_voiture()
-    supprimer_voiture(1)
-    print("Voiture supprimée avec succès")
+supprimer_voiture(1)
+print("Voiture supprimée avec succès")
 
-def recuperer_voitures():
-    connexion = connecter_db()
-    curseur = connexion.cursor()
-
-    requete = "SELECT id, marque, modele, annee, prix FROM voiture"
-    curseur.execute(requete)
-
-    resultats = curseur.fetchall()
-    voitures = []
-
-    for ligne in resultats:
-        voiture = Voiture(
-            ligne[1],
-            ligne[2],
-            ligne[3],
-            ligne[4],
-            ligne[0]
-        )
-        voitures.append(voiture)
-
-    curseur.close()
-    connexion.close()
-
-    return voitures
+print("Voitures après suppression :")
+v.afficher_voiture()
+voitures = recuperer_voitures()
+print("Voitures après récupération :")
+for v in voitures:
+    v.afficher_voiture()
