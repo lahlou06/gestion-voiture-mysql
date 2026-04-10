@@ -21,3 +21,28 @@ for v in  voitures:
     v.afficher_voiture()
     supprimer_voiture(1)
     print("Voiture supprimée avec succès")
+
+def recuperer_voitures():
+    connexion = connecter_db()
+    curseur = connexion.cursor()
+
+    requete = "SELECT id, marque, modele, annee, prix FROM voiture"
+    curseur.execute(requete)
+
+    resultats = curseur.fetchall()
+    voitures = []
+
+    for ligne in resultats:
+        voiture = Voiture(
+            ligne[1],
+            ligne[2],
+            ligne[3],
+            ligne[4],
+            ligne[0]
+        )
+        voitures.append(voiture)
+
+    curseur.close()
+    connexion.close()
+
+    return voitures
