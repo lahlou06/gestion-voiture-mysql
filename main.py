@@ -1,5 +1,5 @@
 from voiture import Voiture
-from crud_db import connecter_db, ajouter_voiture
+from crud_db import connecter_db, ajouter_voiture,supprimer_voiture
 
 try:
     connexion = connecter_db()
@@ -19,3 +19,5 @@ voitures = [v1, v2,v3]
 print("\nVoitures après ajout :")
 for v in  voitures:
     v.afficher_voiture()
+    supprimer_voiture(1)
+    print("Voiture supprimée avec succès")
